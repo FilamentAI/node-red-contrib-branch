@@ -1,0 +1,30 @@
+{
+    "name": "node-red-contrib-branch",
+    "version": "1.0.0",
+    "description": "A simple node to branch messages that could later be reunited by a join node. ",
+    "main": "branch.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": {
+        "name": "Andy Feltham",
+        "email" : "andy.feltham@filament.ai"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/FilamentAI/node-red-contrib-branch.git"
+    },
+    "keywords": [
+        "editor",
+        "messaging",
+        "flow",
+        "logic",
+        "branch"
+    ],
+    "node-red": {
+        "nodes": {
+            "branch": "branch.js"
+        }
+    }
+}
