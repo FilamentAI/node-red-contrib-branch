@@ -7,7 +7,9 @@ module.exports = function (RED) {
             var toSend = [];
             msg.parts = { 
                 id : msg._msgid,
-                count : parseInt(node.outputs)
+                count : parseInt(node.outputs), 
+                timeout : config.timeout || 0,
+                unique : config.unique
             };
             for ( var i = 0; i < node.outputs; i++ ) { 
                 toSend.push ( msg );

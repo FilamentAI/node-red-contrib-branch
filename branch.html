@@ -7,7 +7,13 @@
                 value: ""
             },
             outputs: {
-                value:2
+                value: 2
+            },
+            timeout: {
+                value: null
+            },
+            unique: {
+                value: true
             }
         },
         inputs: 1,
@@ -28,11 +34,15 @@
                     if (value !== this.value) { $(this).spinner("value", value); }
                 }
             }); 
-        }, 
-        oneditsave : function () { 
-            console.log("save");
-            console.log(this);
-            
+            $( "#node-input-timeout" ).spinner({
+                min:1,
+                change: function(event, ui) {
+                    var value = this.value;
+                    if (!value.match(/^\d+$/)) { value = 1;  }
+                    else if (value < this.min) { value = this.min; }
+                    if (value !== this.value) { $(this).spinner("value", value); }
+                }
+            }); 
         }
     });
 
@@ -49,20 +59,34 @@
         </label>
         <input id="node-input-outputs" style="width: 60px;">
     </div>
+    <div class="form-row">
+        <label for="node-input-timeout"><i class="fa fa-clock">
+            </i> <span>Timeout</span>
+        </label>
+        <input id="node-input-timeout" style="width: 60px;">
+    </div>
+    <div class="form-row">
+        <label for="node-input-unique"><i class="fa fa-clock">
+            </i> <span>Unique?</span>
+        </label>
+        <input id="node-input-unique" type="checkbox" style="width: 60px;">
+    </div>
 </script>
 
 <script type="text/x-red" data-help-name="branch">
-    <p>A simple node will allow a flow to be branched, and then rejoined later using a join node.</p>
+    <p>A simple node will allow a flow to be branched, and then rejoined later using a <code>assemble</code> node.</p>
     <h3>Inputs</h3>
     <p>This node will accept any input. It simply acts as a pass-through node and does not expect anything as an input.</p>
     <h3>Outputs</h3>
-    <p>The original message <code>payload</code> will remain unchanged as a result of this node. Instead, this node adds an additional <code>parts</code> property so that the messages can later be reassembled using the <code>join</code> node.</p>
+    <p>The original message <code>payload</code> will remain unchanged as a result of this node. Instead, this node adds an additional <code>parts</code> property so that the messages can later be reassembled using the <code>assemble</code> node.</p>
     <p>For example, this node will set the <code>parts</code> property as follows : 
     <pre>
 msg.parts = { 
     id : msg._msgid,
-    count : parseInt(node.outputs)
+    count : parseInt(node.outputs),
+    timeout : x,
+    unique : true
 };</pre>
-    In this example, all messages will later be reassembled based on their <code>_msgid</code>, and will expect to be exactly <code>n</code> messages, where <code>n</code> is the number of outputs as configured in this node. 
+    In this example, all messages will later be reassembled based on their <code>_msgid</code>, and will expect to be exactly <code>n</code> messages, where <code>n</code> is the number of outputs as configured in this node. This process will only wait <code>x</code> seconds for all <code>n</code> messages to complete before sending the messages that have compeleted. If <code>unique</code> is true, then any messagese sent after the timeout will be discarded. 
     </p>
 </script>
