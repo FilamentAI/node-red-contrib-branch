@@ -83,10 +83,12 @@
     <pre>
 msg.parts = { 
     id : msg._msgid,
+    index : i,
     count : parseInt(node.outputs),
     timeout : x,
     unique : true
 };</pre>
-    In this example, all messages will later be reassembled based on their <code>_msgid</code>, and will expect to be exactly <code>n</code> messages, where <code>n</code> is the number of outputs as configured in this node. This process will only wait <code>x</code> seconds for all <code>n</code> messages to complete before sending the messages that have compeleted. If <code>unique</code> is true, then any messagese sent after the timeout will be discarded. 
+    In this example, all messages will later be reassembled based on their <code>_msgid</code>, and will expect to be exactly <code>n</code> messages, where <code>n</code> is the number of outputs as configured in this node. This process will only wait <code>x</code> seconds for all <code>n</code> messages to complete before sending the messages that have compeleted. If <code>unique</code> is true, then any messagese sent after the timeout will be discarded.<br>
+    Note also that the order of the messages in the resulting payload following the <code>assemble</code> node will match the order of the branches. 
     </p>
 </script>

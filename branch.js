@@ -12,7 +12,9 @@ module.exports = function (RED) {
                 unique : config.unique
             };
             for ( var i = 0; i < node.outputs; i++ ) { 
-                toSend.push ( msg );
+                var newObject = JSON.parse(JSON.stringify(msg));
+                newObject.parts.index = i;
+                toSend.push ( newObject );
             }
             node.send(toSend);
         });
